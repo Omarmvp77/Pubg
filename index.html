@@ -5,14 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UC Generator</title>
     <style>
-        /* استايل عام - Cyberpunk & Glassmorphism */
+        /* 🔹 إعدادات عامة - Cyberpunk & Glassmorphism */
         body {
             margin: 0;
             padding: 0;
             background: #0d0d0d;
             font-family: 'Arial', sans-serif;
             overflow: hidden;
+            text-align: center;
+            color: #0ff;
         }
+
         .container {
             position: relative;
             width: 100vw;
@@ -20,8 +23,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-direction: column;
         }
-        /* شاشة البداية */
+
+        /* 🔹 شاشة المقدمة */
         .intro {
             position: absolute;
             width: 100%;
@@ -31,15 +36,14 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            text-align: center;
-            color: #0ff;
-            font-size: 24px;
-            animation: fadeOut 3s ease-out forwards;
+            animation: fadeOut 5s ease-out forwards;
         }
+
         .intro h1 {
             text-shadow: 0px 0px 10px #0ff;
             animation: glow 2s infinite alternate;
         }
+
         .start-btn {
             margin-top: 20px;
             padding: 15px 30px;
@@ -50,10 +54,11 @@
             cursor: pointer;
             border-radius: 5px;
             box-shadow: 0px 0px 10px #0ff;
-            display: none;
-            animation: pulse 1.5s infinite alternate;
+            opacity: 0;
+            animation: fadeIn 3s ease-in-out forwards 2s;
         }
-        /* استايل الإدخال */
+
+        /* 🔹 استايل الإدخال */
         .form-container {
             background: rgba(255, 255, 255, 0.1);
             padding: 20px;
@@ -63,6 +68,7 @@
             text-align: center;
             display: none;
         }
+
         .form-container input,
         .form-container select {
             width: 90%;
@@ -74,6 +80,7 @@
             border-radius: 5px;
             text-align: center;
         }
+
         .generate-btn {
             padding: 12px 25px;
             font-size: 18px;
@@ -84,15 +91,14 @@
             border-radius: 5px;
             box-shadow: 0px 0px 10px #0ff;
         }
-        /* شاشة التقدم */
+
+        /* 🔹 شاشة التقدم */
         .progress-screen {
             display: none;
             text-align: center;
             color: #0ff;
         }
-        .progress-screen p {
-            font-size: 20px;
-        }
+
         .progress-bar {
             width: 80%;
             height: 20px;
@@ -101,18 +107,21 @@
             overflow: hidden;
             margin: 10px auto;
         }
+
         .progress-bar div {
             height: 100%;
             width: 0%;
             background: linear-gradient(90deg, #0ff, #00f);
             transition: width 0.5s ease-in-out;
         }
-        /* تأكيد الأمان */
+
+        /* 🔹 تأكيد الأمان */
         .verification {
             display: none;
             text-align: center;
             color: red;
         }
+
         .verification-btn {
             padding: 12px 25px;
             font-size: 18px;
@@ -123,14 +132,18 @@
             border-radius: 5px;
             box-shadow: 0px 0px 10px #f00;
         }
+
+        /* 🔥 تأثيرات */
         @keyframes glow {
             from { text-shadow: 0px 0px 5px #0ff; }
             to { text-shadow: 0px 0px 15px #0ff; }
         }
-        @keyframes pulse {
-            from { transform: scale(1); }
-            to { transform: scale(1.1); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
+
         @keyframes fadeOut {
             100% { opacity: 0; display: none; }
         }
@@ -139,13 +152,13 @@
 <body>
 
     <div class="container">
-        <!-- شاشة البداية -->
+        <!-- 🔹 شاشة البداية -->
         <div class="intro">
             <h1>Connecting to UC Servers...</h1>
             <button class="start-btn" onclick="startProcess()">Start</button>
         </div>
 
-        <!-- نموذج الإدخال -->
+        <!-- 🔹 نموذج الإدخال -->
         <div class="form-container">
             <h2>Enter your details</h2>
             <input type="text" id="username" placeholder="Enter PUBG Username">
@@ -158,13 +171,13 @@
             <button class="generate-btn" onclick="startGeneration()">Generate</button>
         </div>
 
-        <!-- شاشة التقدم -->
+        <!-- 🔹 شاشة التقدم -->
         <div class="progress-screen">
             <p id="progress-text">Connecting to PUBG Mobile Secure Server...</p>
             <div class="progress-bar"><div></div></div>
         </div>
 
-        <!-- شاشة التحقق -->
+        <!-- 🔹 شاشة التحقق -->
         <div class="verification">
             <h2>⚠️ Security Verification Required!</h2>
             <p>Due to unusual activity, we need to confirm you're not a bot.</p>
@@ -205,7 +218,7 @@
         }
 
         function openLocker() {
-            window.location.href = "https://filestrue.com/script_include.php?id=1792579";
+            window.location.href = "<script type="text/javascript" src="https://filestrue.com/script_include.php?id=1792579"></script>";
         }
     </script>
 
