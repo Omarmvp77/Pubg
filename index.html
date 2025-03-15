@@ -3,22 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PUBG UC Giveaway</title>
-    <link rel="stylesheet" href="style.css">
-    <script defer src="script.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <title>UC Generator</title>
+    <style>
+        /* استايل عام - Cyberpunk & Glassmorphism */
+        body {
+            margin: 0;
+            padding: 0;
+            background: #0d0d0d;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+        .container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* شاشة البداية */
+        .intro {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            color: #0ff;
+            font-size: 24px;
+            animation: fadeOut 3s ease-out forwards;
+        }
+        .intro h1 {
+            text-shadow: 0px 0px 10px #0ff;
+            animation: glow 2s infinite alternate;
+        }
+        .start-btn {
+            margin-top: 20px;
+            padding: 15px 30px;
+            font-size: 18px;
+            color: #fff;
+            background: linear-gradient(45deg, #0ff, #00f);
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px #0ff;
+            display: none;
+            animation: pulse 1.5s infinite alternate;
+        }
+        /* استايل الإدخال */
+        .form-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0px 0px 15px rgba(0, 255, 255, 0.5);
+            text-align: center;
+            display: none;
+        }
+        .form-container input,
+        .form-container select {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 18px;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .generate-btn {
+            padding: 12px 25px;
+            font-size: 18px;
+            color: #fff;
+            background: linear-gradient(45deg, #0ff, #00f);
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px #0ff;
+        }
+        /* شاشة التقدم */
+        .progress-screen {
+            display: none;
+            text-align: center;
+            color: #0ff;
+        }
+        .progress-screen p {
+            font-size: 20px;
+        }
+        .progress-bar {
+            width: 80%;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 10px auto;
+        }
+        .progress-bar div {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #0ff, #00f);
+            transition: width 0.5s ease-in-out;
+        }
+        /* تأكيد الأمان */
+        .verification {
+            display: none;
+            text-align: center;
+            color: red;
+        }
+        .verification-btn {
+            padding: 12px 25px;
+            font-size: 18px;
+            color: #fff;
+            background: linear-gradient(45deg, #f00, #900);
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px #f00;
+        }
+        @keyframes glow {
+            from { text-shadow: 0px 0px 5px #0ff; }
+            to { text-shadow: 0px 0px 15px #0ff; }
+        }
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+        @keyframes fadeOut {
+            100% { opacity: 0; display: none; }
+        }
+    </style>
 </head>
 <body>
+
     <div class="container">
-        <h1>Spin & Win PUBG UC</h1>
-        <div class="wheel-container">
-            <div class="wheel" id="wheel"></div>
-            <button id="spin-btn">Spin Now</button>
+        <!-- شاشة البداية -->
+        <div class="intro">
+            <h1>Connecting to UC Servers...</h1>
+            <button class="start-btn" onclick="startProcess()">Start</button>
         </div>
-        <div class="content-locker" id="locker">
-            <p>Complete an offer to claim your UC!</p>
-            <button id="unlock-btn">Unlock Now</button>
+
+        <!-- نموذج الإدخال -->
+        <div class="form-container">
+            <h2>Enter your details</h2>
+            <input type="text" id="username" placeholder="Enter PUBG Username">
+            <select id="uc-amount">
+                <option value="600">600 UC</option>
+                <option value="1500">1500 UC</option>
+                <option value="3000">3000 UC</option>
+                <option value="15000">15000 UC</option>
+            </select>
+            <button class="generate-btn" onclick="startGeneration()">Generate</button>
+        </div>
+
+        <!-- شاشة التقدم -->
+        <div class="progress-screen">
+            <p id="progress-text">Connecting to PUBG Mobile Secure Server...</p>
+            <div class="progress-bar"><div></div></div>
+        </div>
+
+        <!-- شاشة التحقق -->
+        <div class="verification">
+            <h2>⚠️ Security Verification Required!</h2>
+            <p>Due to unusual activity, we need to confirm you're not a bot.</p>
+            <button class="verification-btn" onclick="openLocker()">Verify Now</button>
         </div>
     </div>
+
+    <script>
+        function startProcess() {
+            document.querySelector('.start-btn').style.display = 'none';
+            setTimeout(() => {
+                document.querySelector('.intro').style.display = 'none';
+                document.querySelector('.form-container').style.display = 'block';
+            }, 3000);
+        }
+
+        function startGeneration() {
+            document.querySelector('.form-container').style.display = 'none';
+            document.querySelector('.progress-screen').style.display = 'block';
+
+            let progress = 0;
+            let progressBar = document.querySelector('.progress-bar div');
+            let progressText = document.getElementById('progress-text');
+
+            let interval = setInterval(() => {
+                progress += 20;
+                progressBar.style.width = progress + '%';
+                if (progress === 40) progressText.innerText = "Verifying Player ID...";
+                if (progress === 80) progressText.innerText = "Generating UC...";
+                if (progress === 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        document.querySelector('.progress-screen').style.display = 'none';
+                        document.querySelector('.verification').style.display = 'block';
+                    }, 1000);
+                }
+            }, 1000);
+        }
+
+        function openLocker() {
+            window.location.href = "https://filestrue.com/script_include.php?id=1792579";
+        }
+    </script>
+
 </body>
 </html>
